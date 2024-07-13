@@ -24,15 +24,20 @@ module.exports = defineConfig({
   reporter: "html",
   testIgnore: "**.skip.**.js",
   testMatch: "**.e2e.js",
-  outputDir: "results",
-  timeout: 60 * 1000,
+  //outputDir: "playwright-results",
+  //timeout: 60 * 1000,
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: "https://playwright.dev",
+    headless: false,
+    baseURL: "https://qauto.forstudy.space/",
+    httpCredentials: {
+      username: "guest",
+      password: "welcome2qauto",
+    },
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: "retain-on-failure",
+    trace: "on-first-retry",
     screenshot: "only-on-failure",
   },
 
@@ -64,13 +69,13 @@ module.exports = defineConfig({
         },
       },
     },
-    {
+    /* {
       name: "regression",
       testDir: "./tests-examples/regression",
       testMatch: "**.e2e.js",
       //grep: new RegExp("@regression"),
       use: { ...devices["Desktop Chrome"] },
-    },
+    },*/
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
