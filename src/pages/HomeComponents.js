@@ -1,4 +1,4 @@
-//Lesson 20
+//Lesson 20. Codegen & POM in Playwright
 const { test, expect } = require("@playwright/test");
 import { BaseComponents } from "./BaseComponents";
 import { Registration } from "./Registration";
