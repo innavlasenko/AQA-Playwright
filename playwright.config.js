@@ -4,14 +4,13 @@ const { defineConfig, devices } = require("@playwright/test");
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+ */ const env = require("dotenv").config();
 
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
-  testDir: "./tests/registration",
+  testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -30,12 +29,11 @@ module.exports = defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     headless: false,
-    baseURL: "https://qauto.forstudy.space/",
-    httpCredentials: {
-      username: "guest",
-      password: "welcome2qauto",
-    },
-
+    baseURL: process.env.BASE_URL,
+    //httpCredentials: {
+    username: process.env.USER,
+    password: process.env.PASS,
+    //},
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
     screenshot: "only-on-failure",
@@ -43,7 +41,7 @@ module.exports = defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    {
+    /*{
       name: "smoke",
       // testDir: './tests/smoke',
       // testMatch: '**.smoke.e2e.ts',
@@ -56,17 +54,18 @@ module.exports = defineConfig({
           height: 300,
         },
       },
-    },
+    },*/
     {
       name: "qauto",
-      testMatch: "**.qauto.spec.js",
+      testMatch: "**.e2e.js",
       use: {
         headless: false,
-        baseURL: "https://qauto.forstudy.space/",
-        httpCredentials: {
+        ...devices["Desktop Chrome"],
+        //baseURL: "https://qauto.forstudy.space/",
+        /*httpCredentials: {
           username: "guest",
           password: "welcome2qauto",
-        },
+        },*/
       },
     },
     /* {
@@ -75,13 +74,11 @@ module.exports = defineConfig({
       testMatch: "**.e2e.js",
       //grep: new RegExp("@regression"),
       use: { ...devices["Desktop Chrome"] },
-    },*/
+    },
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
-    },
-    /* 
-    {
+    },    {
       name: "firefox",
       use: { ...devices["Desktop Firefox"] },
     },
