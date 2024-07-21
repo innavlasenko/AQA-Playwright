@@ -1,0 +1,8 @@
+<testsuites id="" name="" tests="2" failures="0" skipped="0" errors="0" time="4.223422">
+<testsuite name="registration\example.e2e.js" timestamp="2024-07-19T13:50:28.872Z" hostname="qauto" tests="2" failures="0" skipped="0" time="2.906" errors="0">
+<testcase name="has title" classname="registration\example.e2e.js" time="1.697">
+</testcase>
+<testcase name="get started link" classname="registration\example.e2e.js" time="1.209">
+</testcase>
+</testsuite>
+</testsuites>

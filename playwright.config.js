@@ -20,7 +20,17 @@ module.exports = defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: "html",
+  /*[
+    [
+      "monocart-reporter",
+      {
+        name: "My Test Report",
+        outputFile: "./test-results/report.html",
+      },
+    ],
+  ],*/
+  reporter: "./custom-reporter.js",
+
   testIgnore: "**.skip.**.js",
   testMatch: "**.e2e.js",
   //outputDir: "playwright-results",
@@ -35,7 +45,7 @@ module.exports = defineConfig({
     password: process.env.PASS,
     //},
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: "on-first-retry",
+    trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },
 
