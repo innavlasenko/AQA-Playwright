@@ -30,27 +30,46 @@ module.exports = defineConfig({
     ],
   ],*/
   reporter: "./custom-reporter.js",
-
+  globalSetup: "global-setup.js",
   testIgnore: "**.skip.**.js",
-  testMatch: "**.e2e.js",
+  testMatch: "**.js",
   //outputDir: "playwright-results",
   //timeout: 60 * 1000,
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     headless: false,
-    baseURL: process.env.BASE_URL,
-    //httpCredentials: {
-    username: process.env.USER,
-    password: process.env.PASS,
+
     //},
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "retain-on-failure",
+    baseURL: "https://qauto.forstudy.space/",
+    httpCredentials: {
+      username: "guest",
+      password: "welcome2qauto",
+    },
     screenshot: "only-on-failure",
   },
 
   /* Configure projects for major browsers */
   projects: [
+    {
+      name: "login",
+      testDir: "./tests/setup",
+      testMatch: "login.setup.js",
+      use: {
+        headless: false,
+        ...devices["Desktop Chrome"],
+      },
+    },
+    {
+      name: "fixtures",
+      testMatch: "**.spec.js",
+      testDir: "./tests/fixture",
+      use: {
+        ...devices["Desktop Chrome"],
+      },
+    },
     /*{
       name: "smoke",
       // testDir: './tests/smoke',
@@ -67,18 +86,22 @@ module.exports = defineConfig({
     },*/
     {
       name: "qauto",
-      testMatch: "**.e2e.js",
+      testDir: "./tests/storage",
+      testMatch: "**.js",
       use: {
         headless: false,
+        storageState: "session-storage.json",
         ...devices["Desktop Chrome"],
-        //baseURL: "https://qauto.forstudy.space/",
-        /*httpCredentials: {
+        baseURL: "https://qauto.forstudy.space/",
+        httpCredentials: {
           username: "guest",
           password: "welcome2qauto",
-        },*/
+        },
       },
+      dependencies: ["login"],
     },
-    /* {
+    /*
+     {
       name: "regression",
       testDir: "./tests-examples/regression",
       testMatch: "**.e2e.js",
